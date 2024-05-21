@@ -5,6 +5,7 @@ pkgs.stdenv.mkDerivation {
   src = ./src;
 
   buildInputs = with pkgs; [
+    git
     rustc
     cargo
   ]; # These are runtime deps
@@ -15,12 +16,12 @@ pkgs.stdenv.mkDerivation {
 
 
   buildPhase = ''
-    rustc main.rs -o $name
+    cargo build -r
   '';
 
   installPhase = ''
     mkdir -p $out/bin
-    cp $name $out/bin
+    cp target/release/$name $out/bin
   '';
 
 
